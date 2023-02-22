@@ -1,0 +1,17 @@
+{
+  "name": "desireon/microblog",
+  "license": "proprietary",
+  "type": "project",
+  "require": {
+    "php": ">=8.1"
+  },
+  "config": {
+    "platform": {},
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src"
+    }
+  }
+}
