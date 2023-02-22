@@ -3,7 +3,8 @@
   "license": "proprietary",
   "type": "project",
   "require": {
-    "php": ">=8.1"
+    "php": ">=8.1",
+    "slim/slim": "3.*"
   },
   "config": {
     "platform": {},
