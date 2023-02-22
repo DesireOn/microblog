@@ -4,7 +4,9 @@
   "type": "project",
   "require": {
     "php": ">=8.1",
+    "doctrine/orm": "^2.14",
     "slim/slim": "3.*",
+    "symfony/cache": "^6.2",
     "twig/twig": "^3.5"
   },
   "config": {
