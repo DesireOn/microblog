@@ -32,17 +32,6 @@ final class User
     }
 
     /**
-     * @param int $id
-     * @return User
-     */
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getEmail(): string

@@ -35,17 +35,6 @@ final class Post
     }
 
     /**
-     * @param int $id
-     * @return Post
-     */
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTitle(): string
