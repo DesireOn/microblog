@@ -38,9 +38,10 @@ final class Post
      * @param int $id
      * @return Post
      */
-    public function setId(int $id): Post
+    public function setId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -56,9 +57,10 @@ final class Post
      * @param string $title
      * @return Post
      */
-    public function setTitle(string $title): Post
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -74,9 +76,10 @@ final class Post
      * @param string $content
      * @return Post
      */
-    public function setContent(string $content): Post
+    public function setContent(string $content): self
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -92,9 +95,10 @@ final class Post
      * @param string $featuredImage
      * @return Post
      */
-    public function setFeaturedImage(string $featuredImage): Post
+    public function setFeaturedImage(string $featuredImage): self
     {
         $this->featuredImage = $featuredImage;
+
         return $this;
     }
 
@@ -110,9 +114,10 @@ final class Post
      * @param string $isPublished
      * @return Post
      */
-    public function setIsPublished(string $isPublished): Post
+    public function setIsPublished(string $isPublished): self
     {
         $this->isPublished = $isPublished;
+
         return $this;
     }
 }
