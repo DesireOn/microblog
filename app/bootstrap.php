@@ -6,7 +6,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Slim\Container;
 
-$container = new Container(require __DIR__ . '/../config/settings.php');
+$container = new Container(require __DIR__ . '/settings.php');
 
 $container[EntityManager::class] = function (Container $c): EntityManager {
     /** @var array $settings */
