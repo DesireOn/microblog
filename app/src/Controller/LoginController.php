@@ -23,6 +23,7 @@ class LoginController
         if ($request->getMethod() === 'POST' && isset($_POST['email'], $_POST['password'])) {
             if ($this->auth->checkCredentials($_POST['email'], $_POST['password'])) {
                 $_SESSION['is_logged'] = true;
+                return $response->withRedirect('/', 301);
             }
         }
         $this->view->render($response, 'login.twig');
