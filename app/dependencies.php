@@ -30,5 +30,10 @@ return function (Container $container) {
         return EntityManager::create($settings['doctrine']['connection'], $config);
     };
 
+    // LoadFixtures
+    $container[LoadFixtures::class] = function (Container $c) {
+        return new LoadFixtures($c[EntityManager::class]);
+    };
+
     return $container;
 };
