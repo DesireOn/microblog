@@ -54,7 +54,7 @@ class LoginController
         $repository = $this->entityManager->getRepository(User::class);
         $users = $repository->findAll();
 
-        $this->view->render($response, 'list.html.twig', ['users' => $users]);
+        $this->view->render($response, 'list.twig', ['users' => $users]);
 
         return $response;
     }
