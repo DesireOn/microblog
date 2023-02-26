@@ -1,3 +1,4 @@
 vendor
 .idea
 app/settings.php
+node_modules
