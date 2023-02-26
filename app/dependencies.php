@@ -1,6 +1,7 @@
 <?php
 
 use App\Command\LoadFixtures;
+use App\Service\Auth;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -30,9 +31,14 @@ return function (Container $container) {
         return EntityManager::create($settings['doctrine']['connection'], $config);
     };
 
-    // LoadFixtures
-    $container[LoadFixtures::class] = function (Container $c) {
+    // Load Fixtures
+    $container[LoadFixtures::class] = function (Container $c): LoadFixtures {
         return new LoadFixtures($c[EntityManager::class]);
+    };
+
+    // Load Auth
+    $container[Auth::class] = function (Container $c): Auth {
+        return new Auth($c[EntityManager::class]);
     };
 
     return $container;
