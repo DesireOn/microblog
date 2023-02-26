@@ -5,7 +5,7 @@ return [
     'settings' => [
         'displayErrorDetails' => true,
         'determineRouteBeforeAppMiddleware' => false,
-
+        // Doctrine settings
         'doctrine' => [
             // Enables or disables Doctrine metadata caching
             // for either performance or convenience during development.
@@ -34,6 +34,15 @@ return [
                 'password' => 'secret',
                 'charset' => 'utf8'
             ]
-        ]
+        ],
+        // View settings
+        'view' => [
+            'template_path' => __DIR__ . '/templates',
+            'twig' => [
+                'cache' => __DIR__ . '/../cache/twig',
+                'debug' => true,
+                'auto_reload' => true,
+            ],
+        ],
     ]
 ];
