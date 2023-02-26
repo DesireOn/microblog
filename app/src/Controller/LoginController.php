@@ -18,8 +18,13 @@ class LoginController
         $this->view = $view;
     }
 
-    public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function login(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        if ($request->getMethod() === 'POST' && isset($_POST['email'], $_POST['password'])) {
+            if ($this->auth->checkCredentials($_POST['email'], $_POST['password'])) {
+                $_SESSION['is_logged'] = true;
+            }
+        }
         $this->view->render($response, 'login.twig');
         return $response;
     }
