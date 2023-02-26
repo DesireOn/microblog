@@ -12,7 +12,7 @@ class UserDataLoader implements FixtureInterface
     {
         $user = new User();
         $user->setEmail('desireon98@gmail.com');
-        $user->setPassword(sha1('12345'));
+        $user->setPassword(password_hash('12345', PASSWORD_DEFAULT));
         $user->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($user);
