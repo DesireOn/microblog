@@ -59,7 +59,8 @@ return function (Container $container) {
     $container[LoginController::class] = function (Container $c): LoginController {
         return new LoginController(
             $c->get(Auth::class),
-            $c->get('view')
+            $c->get('view'),
+            $c->get('router')
         );
     };
 
@@ -72,7 +73,8 @@ return function (Container $container) {
     $container[UserController::class] = function (Container $c): UserController {
         return new UserController(
             $c->get('view'),
-            $c->get(EntityManager::class)
+            $c->get(EntityManager::class),
+            $c->get('router')
         );
     };
 
