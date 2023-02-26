@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Service\Auth;
@@ -38,13 +38,13 @@ class LoginController
                 return $response->withRedirect('/admin', 301);
             } else {
                 $errorMessage = 'Invalid Credentials';
-                return $response->withRedirect(sprintf('/admin/login?errorMessage=%s', urlencode($errorMessage)));
+                return $response->withRedirect(sprintf('/login?errorMessage=%s', urlencode($errorMessage)));
             }
         }
 
         $params = $request->getQueryParams();
         $errorMessage = $params['errorMessage'] ?? null;
-        $this->view->render($response, 'admin/login.twig', ['errorMessage' => $errorMessage]);
+        $this->view->render($response, 'login.twig', ['errorMessage' => $errorMessage]);
 
         return $response;
     }

@@ -1,7 +1,7 @@
 <?php
 
 use App\Command\LoadFixtures;
-use App\Controller\Admin\LoginController;
+use App\Controller\LoginController;
 use App\Middleware\AdminMiddleware;
 use App\Service\Auth;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
