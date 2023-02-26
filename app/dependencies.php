@@ -34,17 +34,17 @@ return function (Container $container) {
 
     // Load Fixtures
     $container[LoadFixtures::class] = function (Container $c): LoadFixtures {
-        return new LoadFixtures($c[EntityManager::class]);
+        return new LoadFixtures($c->get(EntityManager::class));
     };
 
     // Load Auth
     $container[Auth::class] = function (Container $c): Auth {
-        return new Auth($c[EntityManager::class]);
+        return new Auth($c->get(EntityManager::class));
     };
 
     // Load LoginController
     $container[LoginController::class] = function (Container $c): LoginController {
-        return new LoginController($c[Auth::class]);
+        return new LoginController($c->get(Auth::class));
     };
 
     return $container;
