@@ -28,7 +28,16 @@ class Auth
 
     public function isLogged(): bool
     {
-        return !empty($_SESSION['is_logged']);
+        return empty($_SESSION['is_logged']) === false;
+    }
+
+    public function logout(): void
+    {
+        if ($this->isLogged() === true) {
+            $_SESSION = [];
+            session_unset();
+            session_destroy();
+        }
     }
 
     private function checkCredentials(): bool
