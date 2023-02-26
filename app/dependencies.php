@@ -47,5 +47,16 @@ return function (Container $container) {
         return new LoginController($c->get(Auth::class));
     };
 
+    // Load Twig
+    $container['view'] = function ($c) {
+        $settings = $c->get('settings');
+        $view = new Slim\Views\Twig($settings['view']['template_path'], $settings['view']['twig']);
+
+        // Add extensions
+        $view->addExtension(new Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
+
+        return $view;
+    };
+
     return $container;
 };
