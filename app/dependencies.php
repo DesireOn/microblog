@@ -2,6 +2,7 @@
 
 use App\Command\LoadFixtures;
 use App\Controller\Admin\LoginController;
+use App\Middleware\AdminMiddleware;
 use App\Service\Auth;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
@@ -56,6 +57,11 @@ return function (Container $container) {
     // Load LoginController
     $container[LoginController::class] = function (Container $c): LoginController {
         return new LoginController($c->get(Auth::class), $c->get('view'));
+    };
+
+    // Load LoginController
+    $container[AdminMiddleware::class] = function (Container $c): AdminMiddleware {
+        return new AdminMiddleware($c->get(Auth::class));
     };
 
     return $container;
