@@ -44,7 +44,7 @@ class LoginController
 
         $params = $request->getQueryParams();
         $errorMessage = $params['errorMessage'] ?? null;
-        $this->view->render($response, 'login.twig', ['errorMessage' => $errorMessage]);
+        $this->view->render($response, 'admin/login.twig', ['errorMessage' => $errorMessage]);
 
         return $response;
     }
