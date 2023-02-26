@@ -26,6 +26,11 @@ class Auth
         }
     }
 
+    public function isLogged(): bool
+    {
+        return !empty($_SESSION['is_logged']);
+    }
+
     private function checkCredentials(): bool
     {
         /** @var User $user */
