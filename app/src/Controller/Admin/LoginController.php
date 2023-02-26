@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Service\Auth;
 use Psr\Http\Message\ResponseInterface;
@@ -26,7 +26,7 @@ class LoginController
                 return $response->withRedirect('/', 301);
             } else {
                 $errorMessage = 'Invalid Credentials';
-                return $response->withRedirect(sprintf('/login?errorMessage=%s', urlencode($errorMessage)));
+                return $response->withRedirect(sprintf('/admin/login?errorMessage=%s', urlencode($errorMessage)));
             }
         }
 

@@ -1,14 +1,14 @@
 <?php
 
 use App\Command\LoadFixtures;
-use App\Controller\LoginController;
+use App\Controller\Admin\LoginController;
 use App\Service\Auth;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Slim\Container;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Slim\Container;
 
 return function (Container $container) {
     // Load EntityManager
