@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\DataMapper\UserMapper;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Psr\Http\Message\ResponseInterface;
@@ -18,6 +19,7 @@ class UserController
     private Twig $view;
     private EntityManager $entityManager;
     private ValidatorInterface $validator;
+    private EntityRepository $userRepository;
 
     public function __construct(Twig $view, EntityManager $entityManager)
     {
@@ -26,13 +28,13 @@ class UserController
         $this->validator = Validation::createValidatorBuilder()
             ->addMethodMapping('loadValidatorMetadata')
             ->getValidator();
+        $this->userRepository = $this->entityManager->getRepository(User::class);
     }
     public function list(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $repository = $this->entityManager->getRepository(User::class);
-        $users = $repository->findAll();
-
-        $this->view->render($response, 'admin/list.twig', ['users' => $users]);
+        $this->view->render($response, 'admin/list.twig', [
+            'users' => $this->userRepository->findAll()
+        ]);
 
         return $response;
     }
@@ -40,7 +42,6 @@ class UserController
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param array $args
      * @return ResponseInterface
      * @throws ORMException
      * @throws OptimisticLockException
