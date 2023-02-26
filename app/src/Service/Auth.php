@@ -8,22 +8,25 @@ use Doctrine\ORM\EntityManager;
 class Auth
 {
     private EntityManager $entityManager;
-    private string $email;
-    private string $password;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
-
-    public function login(string $email, string $password): void
+    public function checkCredentials(string $email, string $password): bool
     {
-        $this->email = $email;
-        $this->password = $password;
-
-        if ($this->checkCredentials()) {
-            $_SESSION['is_logged'] = true;
+        /** @var User $user */
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => $email
+        ]);
+        if (!is_null($user)) {
+            $hashedPassword = $user->getPassword();
+            if (password_verify($password, $hashedPassword)) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public function isLogged(): bool
@@ -38,21 +41,5 @@ class Auth
             session_unset();
             session_destroy();
         }
-    }
-
-    private function checkCredentials(): bool
-    {
-        /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $this->email
-        ]);
-        if (!is_null($user)) {
-            $hashedPassword = $user->getPassword();
-            if (password_verify($this->password, $hashedPassword)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
