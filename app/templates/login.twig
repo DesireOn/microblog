@@ -6,6 +6,9 @@
 <body>
     <h1>Login</h1>
     <form action="" method="post">
+        {% if errorMessage|default %}
+            <p class="error">{{ errorMessage }}</p>
+        {% endif %}
         <p><label for="email">Email:</label><br />
             <input type="email" name="email" id="email" required="required" />
         </p>
