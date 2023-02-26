@@ -42,11 +42,6 @@ return function (Container $container) {
         return new Auth($c->get(EntityManager::class));
     };
 
-    // Load LoginController
-    $container[LoginController::class] = function (Container $c): LoginController {
-        return new LoginController($c->get(Auth::class));
-    };
-
     // Load Twig
     $container['view'] = function ($c) {
         $settings = $c->get('settings');
@@ -56,6 +51,11 @@ return function (Container $container) {
         $view->addExtension(new Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
 
         return $view;
+    };
+
+    // Load LoginController
+    $container[LoginController::class] = function (Container $c): LoginController {
+        return new LoginController($c->get(Auth::class), $c->get('view'));
     };
 
     return $container;
