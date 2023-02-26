@@ -1,6 +1,7 @@
 <?php
 
 use App\Command\LoadFixtures;
+use App\Controller\LoginController;
 use App\Service\Auth;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
@@ -39,6 +40,11 @@ return function (Container $container) {
     // Load Auth
     $container[Auth::class] = function (Container $c): Auth {
         return new Auth($c[EntityManager::class]);
+    };
+
+    // Load LoginController
+    $container[LoginController::class] = function (Container $c): LoginController {
+        return new LoginController($c[Auth::class]);
     };
 
     return $container;
