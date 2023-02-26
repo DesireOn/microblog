@@ -28,7 +28,7 @@ class AdminMiddleware
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         if ($this->auth->isLogged() === false) {
-            $response->withRedirect('/admin/login');
+            return $response->withRedirect('/admin/login');
         }
 
         return $next($request, $response);
