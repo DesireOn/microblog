@@ -14,7 +14,7 @@ final class User
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    #[Column(type: 'string', nullable: false)]
+    #[Column(type: 'string', unique: true, nullable: false)]
     private string $email;
 
     #[Column(type: 'json', nullable: false)]
