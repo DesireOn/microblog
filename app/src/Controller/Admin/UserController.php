@@ -10,6 +10,7 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Response;
 use Slim\Views\Twig;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -67,5 +68,44 @@ class UserController
         return $this->view->render($response, 'admin/create.twig', [
             'errorMessage' => $params['errorMessage'] ?? null
         ]);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return ResponseInterface
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+        $user = $repository->find($args['id']);
+        if ($user === null) {
+            $response = new Response(404);
+            return $response->write("Page not found");
+        }
+
+        $method = $request->getMethod();
+        if ($method === 'POST') {
+            $userMapper = new UserMapper($user);
+            $user = $userMapper->toUser($_POST);
+            $violations = $this->validator->validate($user);
+            if ($violations->count() > 0) {
+                $errorMessage = $violations[0]->getMessage();
+                return $response->withRedirect(
+                    sprintf(
+                        '/admin/users/update?errorMessage=%s',
+                        urlencode($errorMessage)
+                    )
+                );
+            }
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            return $response->withRedirect('/admin/users/list');
+        }
+        return $this->view->render($response, 'admin/update.twig', ['user' => $user]);
     }
 }

@@ -10,5 +10,6 @@ return function (App $app) {
     $app->group('/admin', function (App $app) {
         $app->get('/users/list', UserController::class . ':list');
         $app->map(['GET', 'POST'], '/users/create', UserController::class . ':create');
+        $app->map(['GET', 'POST'], '/users/update/{id}', UserController::class . ':update');
     })->add(AdminMiddleware::class);
 };
