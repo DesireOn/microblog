@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[Entity, Table(name: 'users')]
 final class User
@@ -86,5 +88,15 @@ final class User
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @param ClassMetadata $metadata
+     * @return void
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('email', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('password', new Assert\NotBlank());
     }
 }
