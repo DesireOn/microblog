@@ -10,6 +10,14 @@ session_start();
 $settings = require __DIR__ . '/../app/settings.php';
 $app = new App($settings);
 
+// Register dependencies
+$dependencies = require __DIR__ . '/../app/dependencies.php';
+$dependencies($app->getContainer());
+
+// Register middleware
+$middleware = require __DIR__ . '/../app/middleware.php';
+$middleware($app);
+
 try {
     $app->run();
 } catch (Throwable $e) {
