@@ -34,7 +34,7 @@ class CliMiddleware
      * @throws NotFoundExceptionInterface
      * @throws Exception
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         if (PHP_SAPI === 'cli') {
             $arguments = $_SERVER['argv'];
@@ -61,9 +61,11 @@ class CliMiddleware
             }
             $response = $taskInstance->execute($request, $response);
 
-            echo 'success';
+            $response->getBody()->write('Success');
+
+            return $response;
         }
 
-        return $response;
+        return $next($request, $response);
     }
 }
