@@ -1,6 +1,7 @@
 <?php
 
 use App\Command\LoadFixtures;
+use App\Controller\Admin\UserController;
 use App\Controller\LoginController;
 use App\Middleware\AdminMiddleware;
 use App\Service\Auth;
@@ -58,14 +59,21 @@ return function (Container $container) {
     $container[LoginController::class] = function (Container $c): LoginController {
         return new LoginController(
             $c->get(Auth::class),
-            $c->get('view'),
-            $c->get(EntityManager::class)
+            $c->get('view')
         );
     };
 
-    // Load LoginController
+    // Load AdminMiddleware
     $container[AdminMiddleware::class] = function (Container $c): AdminMiddleware {
         return new AdminMiddleware($c->get(Auth::class));
+    };
+
+    // Load Admin\UserController
+    $container[UserController::class] = function (Container $c): UserController {
+        return new UserController(
+            $c->get('view'),
+            $c->get(EntityManager::class)
+        );
     };
 
     return $container;
