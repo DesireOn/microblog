@@ -56,7 +56,11 @@ return function (Container $container) {
 
     // Load LoginController
     $container[LoginController::class] = function (Container $c): LoginController {
-        return new LoginController($c->get(Auth::class), $c->get('view'));
+        return new LoginController(
+            $c->get(Auth::class),
+            $c->get('view'),
+            $c->get(EntityManager::class)
+        );
     };
 
     // Load LoginController
