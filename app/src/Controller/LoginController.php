@@ -24,9 +24,16 @@ class LoginController
             if ($this->auth->checkCredentials($_POST['email'], $_POST['password'])) {
                 $_SESSION['is_logged'] = true;
                 return $response->withRedirect('/', 301);
+            } else {
+                $errorMessage = 'Invalid Credentials';
+                return $response->withRedirect(sprintf('/login?errorMessage=%s', urlencode($errorMessage)));
             }
         }
-        $this->view->render($response, 'login.twig');
+
+        $params = $request->getQueryParams();
+        $errorMessage = $params['errorMessage'] ?? null;
+        $this->view->render($response, 'login.twig', ['errorMessage' => $errorMessage]);
+
         return $response;
     }
 }
