@@ -20,6 +20,7 @@ class LoginController
 
     public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        $this->view->render($response, 'login.twig');
         return $response;
     }
 }
