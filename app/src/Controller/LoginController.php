@@ -5,20 +5,20 @@ namespace App\Controller;
 use App\Service\Auth;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Router;
 use Slim\Views\Twig;
 
 class LoginController
 {
     private Auth $auth;
     private Twig $view;
+    private Router $router;
 
-    public function __construct(
-        Auth $auth,
-        Twig $view,
-    )
+    public function __construct(Auth $auth, Twig $view, Router $router)
     {
         $this->auth = $auth;
         $this->view = $view;
+        $this->router = $router;
     }
 
     public function login(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -33,7 +33,10 @@ class LoginController
                 return $response->withRedirect('/admin', 301);
             } else {
                 $errorMessage = 'Invalid Credentials';
-                return $response->withRedirect(sprintf('/login?errorMessage=%s', urlencode($errorMessage)));
+                return $response->withRedirect(
+                    $this->router->pathFor('login')
+                    .sprintf('?errorMessage=%s', urlencode($errorMessage))
+                );
             }
         }
 
