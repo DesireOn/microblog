@@ -14,38 +14,38 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 final class User
 {
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    private ?int $id = null;
 
     #[Column(type: 'string', unique: true, nullable: false)]
-    private string $email;
+    private ?string $email = null;
 
     #[Column(type: 'json', nullable: false)]
     private array $roles = [];
 
     #[Column(type: 'string', nullable: false)]
-    private string $password;
+    private ?string $password = null;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @param string $email
+     * @param string|null $email
      * @return User
      */
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -72,18 +72,18 @@ final class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      * @return User
      */
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
