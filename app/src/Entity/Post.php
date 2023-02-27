@@ -7,46 +7,48 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[Entity, Table(name: 'posts')]
 final class Post
 {
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    private ?int $id = null;
 
     #[Column(type: 'string', nullable: false)]
-    private string $title;
+    private ?string $title = null;
 
     #[Column(type: 'text', nullable: false)]
-    private string $content;
+    private ?string $content = null;
 
     #[Column(type: 'string', nullable: true)]
-    private string $featuredImage;
+    private ?string $featuredImage = null;
 
     #[Column(type: 'boolean', nullable: false)]
-    private string $isPublished;
+    private ?bool $isPublished = null;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      * @return Post
      */
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -54,18 +56,18 @@ final class Post
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
+     * @param string|null $content
      * @return Post
      */
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
@@ -73,18 +75,18 @@ final class Post
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFeaturedImage(): string
+    public function getFeaturedImage(): ?string
     {
         return $this->featuredImage;
     }
 
     /**
-     * @param string $featuredImage
+     * @param string|null $featuredImage
      * @return Post
      */
-    public function setFeaturedImage(string $featuredImage): self
+    public function setFeaturedImage(?string $featuredImage): self
     {
         $this->featuredImage = $featuredImage;
 
@@ -92,21 +94,28 @@ final class Post
     }
 
     /**
-     * @return string
+     * @return bool|null
      */
-    public function getIsPublished(): string
+    public function getIsPublished(): ?bool
     {
         return $this->isPublished;
     }
 
     /**
-     * @param string $isPublished
+     * @param bool $isPublished
      * @return Post
      */
-    public function setIsPublished(string $isPublished): self
+    public function setIsPublished(?bool $isPublished): self
     {
         $this->isPublished = $isPublished;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('content', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('isPublished', new Assert\Type('boolean'));
     }
 }
