@@ -1,0 +1,12 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Blog Posts List</title>
+</head>
+<body>
+    <h1>Blog Posts List</h1>
+    {% for blogPost in blogPosts %}
+        {{ blogPost.title }}
+    {% endfor %}
+</body>
+</html>

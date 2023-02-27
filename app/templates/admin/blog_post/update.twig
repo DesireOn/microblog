@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Update Blog Post</title>
+</head>
+<body>
+    <h1>Update Blog Post</h1>
+    <form action="" method="post">
+        {% if errorMessage|default %}
+            <p class="error">{{ errorMessage }}</p>
+        {% endif %}
+        <p><label for="title">Title:</label><br />
+            <input type="text" name="title" id="title" required="required" value="{{ blogPost.title }}" />
+        </p>
+        <p><label for="content">Content:</label><br />
+            <textarea name="content" id="content" required="required">{{ blogPost.content }}</textarea>
+        </p>
+        <p><label for="isPublished">Is Published:</label><br />
+            <input
+                    type="checkbox"
+                    name="isPublished"
+                    id="isPublished"
+                    {% if blogPost.isPublished == true %}checked="checked"{% endif %}
+            />
+        </p>
+        <p><input type="submit" value="Update" /></p>
+    </form>
+</body>
+</html>
