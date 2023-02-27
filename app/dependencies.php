@@ -1,6 +1,7 @@
 <?php
 
 use App\Command\LoadFixtures;
+use App\Controller\Admin\BlogPostController;
 use App\Controller\Admin\UserController;
 use App\Controller\LoginController;
 use App\Middleware\AdminMiddleware;
@@ -72,6 +73,15 @@ return function (Container $container) {
     // Load Admin\UserController
     $container[UserController::class] = function (Container $c): UserController {
         return new UserController(
+            $c->get('view'),
+            $c->get(EntityManager::class),
+            $c->get('router')
+        );
+    };
+
+    // Load Admin\BlogPostController
+    $container[BlogPostController::class] = function (Container $c): BlogPostController {
+        return new BlogPostController(
             $c->get('view'),
             $c->get(EntityManager::class),
             $c->get('router')
