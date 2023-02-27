@@ -87,8 +87,7 @@ class UserController
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
     {
-        $repository = $this->entityManager->getRepository(User::class);
-        $user = $repository->find($args['id']);
+        $user = $this->userRepository->find($args['id']);
         if ($user === null) {
             $response = new Response(404);
             return $response->write("Page not found");
@@ -102,16 +101,14 @@ class UserController
             if ($violations->count() > 0) {
                 $errorMessage = $violations[0]->getMessage();
                 return $response->withRedirect(
-                    sprintf(
-                        '/admin/users/update?errorMessage=%s',
-                        urlencode($errorMessage)
-                    )
+                    $this->router->pathFor('admin_users_list')
+                    .sprintf('?errorMessage=%s', urlencode($errorMessage))
                 );
             }
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            return $response->withRedirect('/admin/users/list');
+            return $response->withRedirect($this->router->pathFor('admin_users_list'));
         }
         return $this->view->render($response, 'admin/user/update.twig', ['user' => $user]);
     }
