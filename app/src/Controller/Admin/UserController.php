@@ -37,7 +37,7 @@ class UserController
     }
     public function list(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $this->view->render($response, 'admin/list.twig', [
+        $this->view->render($response, 'admin/user/list.twig', [
             'users' => $this->userRepository->findAll()
         ]);
 
@@ -72,7 +72,7 @@ class UserController
             return $response->withRedirect($this->router->pathFor('admin_users_list'));
         }
 
-        return $this->view->render($response, 'admin/create.twig', [
+        return $this->view->render($response, 'admin/user/create.twig', [
             'errorMessage' => $params['errorMessage'] ?? null
         ]);
     }
@@ -113,6 +113,6 @@ class UserController
 
             return $response->withRedirect('/admin/users/list');
         }
-        return $this->view->render($response, 'admin/update.twig', ['user' => $user]);
+        return $this->view->render($response, 'admin/user/update.twig', ['user' => $user]);
     }
 }
