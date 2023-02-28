@@ -17,6 +17,8 @@ return function (App $app) {
             ->setName('admin_users_create');
         $app->map(['GET', 'POST'], '/users/update/{id}', UserController::class . ':update')
             ->setName('admin_users_update');
+        $app->map(['GET', 'POST'], '/users/delete/{id}', UserController::class . ':delete')
+            ->setName('admin_users_delete');
         // Blog posts routes
         $app->get('/blog-posts/list', BlogPostController::class . ':list')
             ->setName('admin_blog_posts_list');

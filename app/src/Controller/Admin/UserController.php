@@ -112,4 +112,31 @@ class UserController
         }
         return $this->view->render($response, 'admin/user/update.twig', ['user' => $user]);
     }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return Response|ResponseInterface
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, $args): Response|ResponseInterface
+    {
+        $user = $this->userRepository->find($args['id']);
+        if ($user === null) {
+            $response = new Response(404);
+            return $response->write("Page not found");
+        }
+
+        $method = $request->getMethod();
+        if ($method === 'POST') {
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+
+            return $response->withRedirect($this->router->pathFor('admin_users_list'));
+        }
+
+        return $this->view->render($response, 'admin/user/delete.twig', ['user' => $user]);
+    }
 }
