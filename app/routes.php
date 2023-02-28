@@ -24,5 +24,7 @@ return function (App $app) {
             ->setName('admin_blog_posts_create');
         $app->map(['GET', 'POST'], '/blog-posts/update/{id}', BlogPostController::class . ':update')
             ->setName('admin_blog_posts_update');
+        $app->map(['GET', 'POST'], '/blog-posts/delete/{id}', BlogPostController::class . ':delete')
+            ->setName('admin_blog_posts_delete');
     })->add(AdminMiddleware::class);
 };

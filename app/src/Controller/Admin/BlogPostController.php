@@ -112,4 +112,31 @@ class BlogPostController
         }
         return $this->view->render($response, 'admin/blog_post/update.twig', ['blogPost' => $blogPost]);
     }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return Response|ResponseInterface
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, $args): Response|ResponseInterface
+    {
+        $blogPost = $this->blogPostRepository->find($args['id']);
+        if ($blogPost === null) {
+            $response = new Response(404);
+            return $response->write("Page not found");
+        }
+
+        $method = $request->getMethod();
+        if ($method === 'POST') {
+            $this->entityManager->remove($blogPost);
+            $this->entityManager->flush();
+
+            return $response->withRedirect($this->router->pathFor('admin_blog_posts_list'));
+        }
+
+        return $this->view->render($response, 'admin/blog_post/delete.twig', ['blogPost' => $blogPost]);
+    }
 }
