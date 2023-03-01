@@ -57,7 +57,7 @@ class BlogPostController
         $method = $request->getMethod();
         if ($method === 'POST') {
             $blogPostMapper = new BlogPostMapper(new Post());
-            $blogPost = $blogPostMapper->toBlogPost($_POST);
+            $blogPost = $blogPostMapper->toBlogPost($request->getParsedBody());
             $violations = $this->validator->validate($blogPost);
             if ($violations->count() > 0) {
                 $errorMessage = $violations[0]->getMessage();
@@ -96,7 +96,7 @@ class BlogPostController
         $method = $request->getMethod();
         if ($method === 'POST') {
             $blogPostMapper = new BlogPostMapper($blogPost);
-            $blogPost = $blogPostMapper->toBlogPost($_POST);
+            $blogPost = $blogPostMapper->toBlogPost($request->getParsedBody());
             $violations = $this->validator->validate($blogPost);
             if ($violations->count() > 0) {
                 $errorMessage = $violations[0]->getMessage();

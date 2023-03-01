@@ -57,7 +57,7 @@ class UserController
         $method = $request->getMethod();
         if ($method === 'POST') {
             $userMapper = new UserMapper(new User());
-            $user = $userMapper->toUser($_POST);
+            $user = $userMapper->toUser($request->getParsedBody());
             $violations = $this->validator->validate($user);
             if ($violations->count() > 0) {
                 $errorMessage = $violations[0]->getMessage();
@@ -96,7 +96,7 @@ class UserController
         $method = $request->getMethod();
         if ($method === 'POST') {
             $userMapper = new UserMapper($user);
-            $user = $userMapper->toUser($_POST);
+            $user = $userMapper->toUser($request->getParsedBody());
             $violations = $this->validator->validate($user);
             if ($violations->count() > 0) {
                 $errorMessage = $violations[0]->getMessage();
