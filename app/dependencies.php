@@ -2,10 +2,12 @@
 
 use App\Command\LoadFixtures;
 use App\Controller\Admin\BlogPostController;
+use App\Controller\Admin\BlogPostImageController;
 use App\Controller\Admin\UserController;
 use App\Controller\LoginController;
 use App\Middleware\AdminMiddleware;
 use App\Service\Auth;
+use App\Service\Uploader;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -85,6 +87,22 @@ return function (Container $container) {
             $c->get('view'),
             $c->get(EntityManager::class),
             $c->get('router')
+        );
+    };
+
+    // Load Uploader
+    $container[Uploader::class] = function (Container $c): Uploader {
+        return new Uploader();
+    };
+
+    // Load Admin\BlogPostController
+    $container[BlogPostImageController::class] = function (Container $c): BlogPostImageController {
+        return new BlogPostImageController(
+            $c->get('view'),
+            $c->get(EntityManager::class),
+            $c->get('router'),
+            $c->get('settings')['uploadDirectory'],
+            $c->get(Uploader::class)
         );
     };
 

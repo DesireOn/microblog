@@ -1,6 +1,7 @@
 <?php
 
 use App\Controller\Admin\BlogPostController;
+use App\Controller\Admin\BlogPostImageController;
 use App\Controller\Admin\UserController;
 use App\Controller\LoginController;
 use App\Middleware\AdminMiddleware;
@@ -28,5 +29,13 @@ return function (App $app) {
             ->setName('admin_blog_posts_update');
         $app->map(['GET', 'POST'], '/blog-posts/delete/{id}', BlogPostController::class . ':delete')
             ->setName('admin_blog_posts_delete');
+
+        // Blog post images routes
+        $app->map(
+            ['GET', 'POST'],
+            '/blog-posts/{id}/images/upload',
+            BlogPostImageController::class . ':upload'
+        )
+            ->setName('admin_blog_posts_image_upload');
     })->add(AdminMiddleware::class);
 };
