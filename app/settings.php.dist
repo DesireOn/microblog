@@ -5,6 +5,7 @@ return [
     'settings' => [
         'displayErrorDetails' => true,
         'determineRouteBeforeAppMiddleware' => false,
+        'uploadDirectory' => './public/uploads',
         // Doctrine settings
         'doctrine' => [
             // Enables or disables Doctrine metadata caching

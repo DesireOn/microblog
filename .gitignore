@@ -3,3 +3,4 @@ vendor
 app/settings.php
 node_modules
 cache
+public/uploads
